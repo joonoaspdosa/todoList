@@ -35,7 +35,23 @@ class App extends Component {
       todos: this.state.todos.concat(todoData)
     });
   };
-
+  handleCheck = id =>{
+    const nextTodos = this.state.todos.map(todo => {
+      if(todo.id === id){
+        return {...todo, checked: !todo.checked};
+      }
+      return todo;
+    });
+    this.setState({
+      todos:nextTodos
+    });
+  };
+  handleRemove = id => {
+    const nextTodos = this.state.todos.filter(todo => todo.id !== id);
+    this.setState({
+      todos: nextTodos
+    });
+  };
   render() {
     return (
       <div className="App">
@@ -44,7 +60,11 @@ class App extends Component {
         </div>
         <CreateForm onSubmit={this.handleCreate}/>
         <div className="White-box">
-          <TodoList todos={this.state.todos}/>
+          <TodoList 
+            todos={this.state.todos} 
+            onCheck={this.handleCheck}
+            onRemove={this.handleRemove}
+          />
         </div> 
       </div>
     );
